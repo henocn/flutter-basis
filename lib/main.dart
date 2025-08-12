@@ -54,22 +54,69 @@ void main() {
   List<int> numbers = [1, 2, 3, 4, 5, 6];
 
   // parcour via les index du tableau
-  for (int i = 0; i < numbers.length - 1; i++){
-    print(numbers[i]);
-  }
+  // for (int i = 0; i < numbers.length - 1; i++){
+  //   print(numbers[i]);
+  // }
 
   // une autre façon de parcourir les element d'un tableau 
-  for (int number in numbers){
-    print(number);
-  }
+  // for (int number in numbers){
+  //   print(number);
+  // }
 
   // utilisation de while et do while comme en C/C++
 
   
 
+  // LES FUNCTIONS
+  int add (int a, int b){
+    return a + b;
+  }
+  int addArrow(int a, int b) => a + b;
+
+  int mutiply({int a = 5, int b = 14}) {
+    return a * b;
+  };
+
+  // On peux le faire sans initialisé et là on est obligé d'ajouter le mot clef required
+  // Et concernant les function avec des paramètes positionnel on appel la fnction avec function(a:val1, b:val2)
+  int mutiply2({required int a, required int b}) {
+    return a * b;
+  };
+
+
+  // Instance de la classe User
+  // User user = new User(id:1, name:"Abalo", email:"abalo@gmail.com");
+  // print(user.toString());
+
+
+  // En JS on utilise async await mais ici c'est Future
+
+  Future <void> await(int time) {
+    return Future.delayed(Duration(seconds: time), (){
+      print("Time delayed");
+    });
+  }
 
 
 
 
 }
 
+  // LES CLASSES
+  // pour invoquer les données de classe ons'adresse à la classe et non a son instance
+  class User {
+    int id;
+    String name;
+    String email;
+
+    @override
+    String toString(){
+      return "id : $this.id name : $this.name email : $this.email";
+    }
+
+    User({
+      required this.id,
+      required this.name,
+      required this.email
+    });
+  }
