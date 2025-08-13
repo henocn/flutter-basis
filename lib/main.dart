@@ -1,3 +1,4 @@
+import 'package:bases/screens/task_list_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,48 +13,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: "First App",
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("First Screen"),
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.black,
-          leading: const Icon(Icons.menu),
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
-          ],
-        ),
-        body: Center(
-          child: Image.asset(
-            "assets/images/image1.jpeg",
-            width: 200,
-            height: 300,
-            fit: BoxFit.cover,
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: "Liste"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_sharp),
-              label: "Parametres",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_sharp),
-              label: "Parametres",
-            ),
-          ],
-        ),
-
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print("Bouton flottant pressé !");
-          },
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.white,
-          child: Icon(Icons.add),
-          tooltip: "Ajouter un élément",
-        ),
-      ),
+      home: TaskListScreen()
     );
   }
 }
