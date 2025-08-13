@@ -22,7 +22,12 @@ class App extends StatelessWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
           ],
         ),
-        body: const Center(child: Text("Bonjour")),
+        body: Center(child: Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            color: Colors.red,
+            child: Icon(Icons.favorite, color: Colors.red, size: 30),
+        )),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "Liste"),
