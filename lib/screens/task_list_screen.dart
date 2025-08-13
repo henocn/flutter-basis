@@ -1,4 +1,5 @@
 import 'package:bases/models/task.dart';
+import 'package:bases/screens/task_form_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -30,6 +31,91 @@ class _TaskListScreenState extends State<TaskListScreen> {
     )
   ];
 
+  // Méthode pour ajouter une nouvelle tâche
+  void _addNewTask() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const TaskFormScreen(),
+      ),
+    );
+
+    if (result != null && result is Task) {
+      setState(() {
+        tasks.add(result);
+      });
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tâche ajoutée avec succès !'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  // Méthode pour modifier une tâche existante
+  void _editTask(Task task) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TaskFormScreen(task: task),
+      ),
+    );
+
+    if (result != null && result is Task) {
+      setState(() {
+        final index = tasks.indexOf(task);
+        if (index != -1) {
+          tasks[index] = result;
+        }
+      });
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tâche modifiée avec succès !'),
+          backgroundColor: Colors.blue,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  // Méthode pour supprimer une tâche
+  void _deleteTask(Task task) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmer la suppression'),
+          content: Text('Êtes-vous sûr de vouloir supprimer la tâche "${task.title}" ?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Annuler'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  tasks.remove(task);
+                });
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Tâche supprimée avec succès !'),
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              child: const Text('Supprimer', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +161,13 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 children: [
                   // Bouton Edit
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => _editTask(task),
                     icon: const Icon(Icons.edit, color: Colors.blue),
                     tooltip: 'Modifier',
                   ),
                   // Bouton Delete
                   IconButton(
-                    onPressed: () => {},
+                    onPressed: () => _deleteTask(task),
                     icon: const Icon(Icons.delete, color: Colors.red),
                     tooltip: 'Supprimer',
                   ),
@@ -105,15 +191,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Ici vous pouvez ajouter la logique pour ajouter une nouvelle tâche
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Ajouter une nouvelle tâche'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        },
+        onPressed: _addNewTask,
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         child: Icon(Icons.add),
