@@ -23,10 +23,10 @@ class App extends StatelessWidget {
           ],
         ),
         body: Center(
-          child: Image.network(
-            "https://i.redd.it/syy0s5x1unbc1.jpeg",
+          child: Image.asset(
+            "assets/images/image1.jpeg",
             width: 200,
-            height: 100,
+            height: 300,
             fit: BoxFit.cover,
           ),
         ),
