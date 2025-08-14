@@ -31,30 +31,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
     )
   ];
 
-  // Méthode pour ajouter une nouvelle tâche
-  void _addNewTask() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const TaskFormScreen(),
-      ),
-    );
-
-    if (result != null && result is Task) {
-      setState(() {
-        tasks.add(result);
-      });
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Tâche ajoutée avec succès !'),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
   // Méthode pour modifier une tâche existante
   void _editTask(Task task) async {
     final result = await Navigator.push(
@@ -178,6 +154,11 @@ class _TaskListScreenState extends State<TaskListScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) => {
+          if(index == 1) {
+            Navigator.pushNamed(context, "/form")
+          }
+        },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "Liste"),
           BottomNavigationBarItem(
@@ -187,7 +168,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addNewTask,
+        onPressed: () {},
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         child: Icon(Icons.add),

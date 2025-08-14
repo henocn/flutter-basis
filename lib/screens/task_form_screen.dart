@@ -132,6 +132,21 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
           ),
         ),
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) => {
+          if(index == 0) {
+            Navigator.pushNamed(context, "/")
+          }
+        },
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Liste"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_business),
+            label: "Ajouter",
+          ),
+        ],
+      ),
     );
   }
 }
