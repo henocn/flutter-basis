@@ -13,6 +13,8 @@ class TaskFormScreen extends StatefulWidget {
 class _TaskFormScreenState extends State<TaskFormScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isDoneSwitchValue = false;
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   void _saveTask() {
     if (_formKey.currentState!.validate()) {
@@ -43,6 +45,7 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextFormField(
+                controller: _titleController,
                 decoration: const InputDecoration(
                   labelText: 'Titre *',
                   hintText: 'Entrez le titre de la tâche',
@@ -64,6 +67,7 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
               TextFormField(
                 maxLines: 3,
                 minLines: 3,
+                controller: _descriptionController,
                 decoration: const InputDecoration(
                   hintText: "Saisir une description",
                   labelText: "Description",
