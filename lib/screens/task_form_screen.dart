@@ -11,52 +11,28 @@ class TaskFormScreen extends StatefulWidget {
 }
 
 class _TaskFormScreenState extends State<TaskFormScreen> {
-  // Contrôleurs pour les champs de texte
   final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  bool _isDone = false;
+  bool isDoneSwitchValue = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialiser les champs avec les valeurs de la tâche existante (si en mode édition)
-    if (widget.task != null) {
-      _titleController.text = widget.task!.title;
-      _descriptionController.text = widget.task!.description;
-      _isDone = widget.task!.isDone;
+  void _saveTask() {
+    if (_formKey.currentState!.validate()) {
+      print("Formulaire validé !");
     }
   }
 
   @override
-  void dispose() {
-    _titleController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isEditing = widget.task != null;
-    final title = isEditing ? 'Modifier la tâche' : 'Nouvelle tâche';
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text("Formulaire"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.black,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: null,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: null,
-            tooltip: 'Sauvegarder',
-          ),
-        ],
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -100,10 +76,12 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
               // Checkbox pour marquer comme terminée
               const SizedBox(height: 16),
               Switch(
-                value: true,
+                value: isDoneSwitchValue,
                 activeColor: const Color.fromARGB(255, 30, 128, 0),
                 onChanged: (bool value) {
-                  setState(() {});
+                  setState(() {
+                    isDoneSwitchValue = value;
+                  });
                 },
               ),
 
@@ -111,7 +89,7 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
               Container(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _saveTask,
                   child: Text("Enregistrer"),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(28),

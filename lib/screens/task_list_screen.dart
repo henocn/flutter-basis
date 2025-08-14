@@ -149,7 +149,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 ),
               ),
               subtitle: Text(
-                task.description,
+                task.description ?? "",
                 style: TextStyle(
                   color: Colors.grey[600],
                   decoration:
