@@ -16,7 +16,9 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
 
   void _saveTask() {
     if (_formKey.currentState!.validate()) {
-      print("Formulaire validé !");
+      print("Formulaire valide !");
+    } else {
+      print("formulaire invalide");
     }
   }
 
@@ -48,6 +50,12 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                   prefixIcon: Icon(Icons.title),
                 ),
                 textInputAction: TextInputAction.next,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "This is required";
+                  }
+                  return null;
+                },
               ),
 
               const SizedBox(height: 16),
