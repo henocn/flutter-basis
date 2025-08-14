@@ -181,12 +181,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "Liste"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_sharp),
-            label: "Parametres",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_sharp),
-            label: "Parametres",
+            icon: Icon(Icons.add_business),
+            label: "Ajouter",
           ),
         ],
       ),

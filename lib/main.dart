@@ -14,7 +14,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: "First App",
       debugShowCheckedModeBanner: false,
-      home: TaskFormScreen()
+      // home: TaskListScreen()
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const TaskListScreen(),
+        "/form": (context) => const TaskFormScreen()
+      },
     );
   }
 }

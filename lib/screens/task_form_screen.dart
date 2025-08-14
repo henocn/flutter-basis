@@ -24,6 +24,14 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
 
       // Créer une instance de la classe Task
       Task task = new Task(title: title, description: description, isDone: isDone);
+      _titleController.clear();
+      _descriptionController.clear();
+
+      setState(() {
+        isDone = false;
+      });
+
+      print(task.toString());
 
       print("Formulaire valide !");
     } else {
