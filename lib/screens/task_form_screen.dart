@@ -18,6 +18,13 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
 
   void _saveTask() {
     if (_formKey.currentState!.validate()) {
+      String title = _titleController.text;
+      String description = _descriptionController.text;
+      bool isDone = isDoneSwitchValue;
+
+      // Créer une instance de la classe Task
+      Task task = new Task(title: title, description: description, isDone: isDone);
+
       print("Formulaire valide !");
     } else {
       print("formulaire invalide");
