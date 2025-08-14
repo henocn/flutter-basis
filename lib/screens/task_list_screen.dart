@@ -31,68 +31,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
     )
   ];
 
-  // Méthode pour modifier une tâche existante
-  void _editTask(Task task) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TaskFormScreen(task: task),
-      ),
-    );
-
-    if (result != null && result is Task) {
-      setState(() {
-        final index = tasks.indexOf(task);
-        if (index != -1) {
-          tasks[index] = result;
-        }
-      });
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Tâche modifiée avec succès !'),
-          backgroundColor: Colors.blue,
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
-  // Méthode pour supprimer une tâche
-  void _deleteTask(Task task) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirmer la suppression'),
-          content: Text('Êtes-vous sûr de vouloir supprimer la tâche "${task.title}" ?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Annuler'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  tasks.remove(task);
-                });
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Tâche supprimée avec succès !'),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
-              child: const Text('Supprimer', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,8 +38,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         title: const Text("Taches"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.black,
-        leading: const Icon(Icons.arrow_back),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.menu))],
+        leading: const Icon(Icons.task_rounded),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
@@ -137,13 +74,13 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 children: [
                   // Bouton Edit
                   IconButton(
-                    onPressed: () => _editTask(task),
+                    onPressed: () {},
                     icon: const Icon(Icons.edit, color: Colors.blue),
                     tooltip: 'Modifier',
                   ),
                   // Bouton Delete
                   IconButton(
-                    onPressed: () => _deleteTask(task),
+                    onPressed: () {},
                     icon: const Icon(Icons.delete, color: Colors.red),
                     tooltip: 'Supprimer',
                   ),

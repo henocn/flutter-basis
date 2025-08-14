@@ -48,7 +48,9 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
         foregroundColor: Colors.black,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: null,
+          onPressed: () {
+            Navigator.pushNamed(context, '/');
+          },
         ),
       ),
 
