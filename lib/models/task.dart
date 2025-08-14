@@ -1,7 +1,7 @@
 class Task {
-  final String title;
-  final String? description;
-  final bool isDone;
+  String title;
+  String? description;
+  bool isDone;
 
   Task({
     required this.title,
