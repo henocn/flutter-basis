@@ -5,25 +5,27 @@ import 'package:bases/models/task.dart';
 
 class TaskRepository {
   static List<Task> tasks = [];
+  static int nbInstance = 0;
 
   // get by id
-  Task getById(int id) {
+  static Task getById(int id) {
     return TaskRepository.tasks[id];
   }
 
   // Liste des taches
-  List<Task> getAll() {
+  static List<Task> getAll() {
     return TaskRepository.tasks;
   }
 
   // création des taches
-  Task createTask(Task task) {
+  static Task createTask(Task task) {
     TaskRepository.tasks.add(task);
+    task.id = ++TaskRepository.nbInstance;
     return task;
   }
 
   // update des tâches
-  Task updateTask(int id, Task task) {
+  static Task updateTask(int id, Task task) {
     Task updatedTask = TaskRepository.tasks[id];
     updatedTask.title = task.title;
     updatedTask.description = task.description;
@@ -32,7 +34,7 @@ class TaskRepository {
   }
 
   // delete task
-  void deleteTask(int id) {
+  static void deleteTask(int id) {
     TaskRepository.tasks.removeAt(id);
   }
 

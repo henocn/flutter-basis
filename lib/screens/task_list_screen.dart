@@ -1,4 +1,5 @@
 import 'package:bases/models/task.dart';
+import 'package:bases/repositories/task_repository.dart';
 import 'package:bases/screens/task_form_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,23 +14,17 @@ class TaskListScreen extends StatefulWidget {
 
 class _TaskListScreenState extends State<TaskListScreen> {
   // Liste des tâches
-  List<Task> tasks = [
-    Task(
-      title: "Recolter ce que j'ai pas semé",
-      description: 'Pour prouver que je ne suis pas voleur',
-      isDone: false
-    ),
-    Task(
-      title: 'Voler la poule du voisin',
-      description: 'Pour avoir des oeufs',
-      isDone: true
-    ),
-    Task(
-      title: 'Manger des oeufs',
-      description: 'Pour avoir des un bon ventre',
-      isDone: false
-    )
-  ];
+  List<Task> tasks = [];
+
+  // Initialisation de l'état avnat de passer au build et se fait une seule fois 
+  // Au chargement du composant
+  @override
+  void initState(){
+    super.initState();
+    setState(() {
+      tasks = TaskRepository.getAll();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

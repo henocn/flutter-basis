@@ -1,3 +1,4 @@
+import 'package:bases/repositories/task_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:bases/models/task.dart';
 
@@ -24,12 +25,15 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
 
       // Créer une instance de la classe Task
       Task task = new Task(title: title, description: description, isDone: isDone);
+      TaskRepository.createTask(task);
       _titleController.clear();
       _descriptionController.clear();
 
       setState(() {
         isDone = false;
       });
+
+      Navigator.pop(context);
 
       print(task.toString());
 
