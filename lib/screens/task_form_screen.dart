@@ -4,8 +4,9 @@ import 'package:bases/models/task.dart';
 
 class TaskFormScreen extends StatefulWidget {
   final Task? task;
+  final int? taskIndex;
 
-  const TaskFormScreen({super.key, this.task});
+  const TaskFormScreen({super.key, this.task, this.taskIndex});
 
   @override
   State<TaskFormScreen> createState() => _TaskFormScreenState();
@@ -17,6 +18,26 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
+  // Initialise l'écran et pré-remplit le formulaire si on édite une tâche
+  @override
+  void initState() {
+    super.initState();
+    if (widget.task != null) {
+      _titleController.text = widget.task!.title;
+      _descriptionController.text = widget.task!.description ?? '';
+      isDoneSwitchValue = widget.task!.isDone;
+    }
+  }
+
+  // Libère les contrôleurs quand l'écran est détruit
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  // Valide le formulaire et crée ou met à jour une tâche
   void _saveTask() {
     if (_formKey.currentState!.validate()) {
       String title = _titleController.text;
@@ -25,12 +46,18 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
 
       // Créer une instance de la classe Task
       Task task = new Task(title: title, description: description, isDone: isDone);
-      TaskRepository.createTask(task);
+      if (widget.task == null) {
+        // Création
+        TaskRepository.createTask(task);
+      } else {
+        // Mise à jour
+        TaskRepository.updateTask(widget.taskIndex!, task);
+      }
       _titleController.clear();
       _descriptionController.clear();
 
       setState(() {
-        isDone = false;
+        isDoneSwitchValue = false;
       });
 
       Navigator.pop(context);
@@ -43,17 +70,18 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
     }
   }
 
+  // Construit l'interface du formulaire de tâche
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Formulaire"),
+        title: Text(widget.task == null ? "Nouvelle tâche" : "Modifier la tâche"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.black,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            Navigator.pop(context);
           },
         ),
       ),
@@ -123,7 +151,7 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _saveTask,
-                  child: Text("Enregistrer"),
+                  child: Text(widget.task == null ? "Enregistrer" : "Mettre à jour"),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(28),
                     backgroundColor: Color.fromARGB(255, 30, 128, 0),
@@ -140,9 +168,9 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (int index) => {
-          if(index == 0) {
-            Navigator.pushNamed(context, "/")
+        onTap: (int index) {
+          if (index == 0) {
+            Navigator.pop(context);
           }
         },
         items: [

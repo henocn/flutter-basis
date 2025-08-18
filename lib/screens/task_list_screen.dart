@@ -26,6 +26,12 @@ class _TaskListScreenState extends State<TaskListScreen> {
     });
   }
 
+  // Rafraîchit la liste après un retour d'écran ou une action CRUD
+  void _refreshTasks() {
+    setState(() {});
+  }
+
+  // Construit l'interface listant les tâches avec actions CRUD
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,13 +75,26 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 children: [
                   // Bouton Edit
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => TaskFormScreen(
+                            task: task,
+                            taskIndex: index,
+                          ),
+                        ),
+                      ).then((_) => _refreshTasks());
+                    },
                     icon: const Icon(Icons.edit, color: Colors.blue),
                     tooltip: 'Modifier',
                   ),
                   // Bouton Delete
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      TaskRepository.deleteTask(index);
+                      _refreshTasks();
+                    },
                     icon: const Icon(Icons.delete, color: Colors.red),
                     tooltip: 'Supprimer',
                   ),
@@ -86,9 +105,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (int index) => {
-          if(index == 1) {
-            Navigator.pushNamed(context, "/form")
+        onTap: (int index) {
+          if (index == 1) {
+            Navigator.pushNamed(context, "/form").then((_) => _refreshTasks());
           }
         },
         items: [
@@ -100,7 +119,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, "/form").then((_) => _refreshTasks());
+        },
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         child: Icon(Icons.add),

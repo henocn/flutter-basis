@@ -30,7 +30,7 @@ class TaskRepository {
     updatedTask.title = task.title;
     updatedTask.description = task.description;
     updatedTask.isDone= task.isDone;
-    return task;
+    return updatedTask;
   }
 
   // delete task
